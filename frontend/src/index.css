@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+/* 图标尺寸限制 */
+svg.h-4, svg.h-5, svg.h-6, svg.h-8, svg.h-10, svg.h-12, svg.h-16, svg.h-20 {
+  max-width: 100%;
+  height: auto;
+}
