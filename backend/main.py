@@ -49,11 +49,14 @@ app.add_middleware(
 )
 
 # 注册路由
-from routers import resumes_router, tags_router, optimizations_router
+from routers import resumes_router, tags_router, optimizations_router, ocr_router, ats_router, url_fetch_router
 
 app.include_router(resumes_router)
 app.include_router(tags_router)
 app.include_router(optimizations_router)
+app.include_router(ocr_router)
+app.include_router(ats_router)
+app.include_router(url_fetch_router)
 
 
 @app.get("/api/health")

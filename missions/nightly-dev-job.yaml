@@ -1,0 +1,54 @@
+# ==========================================
+# 每日夜间迭代任务配置
+# 执行时间：每天凌晨 01:00、每晚 21:00
+# ==========================================
+
+name: nightly-iteration
+description: 夜间自主代码迭代与优化
+trigger: scheduled
+schedule:
+  times:
+    - "01:00"
+    - "21:00"
+  timezone: "Asia/Shanghai"
+
+tasks:
+  # ==================== 代码质量任务 ====================
+  - name: code-review
+    description: |
+      1. 扫描最近一天修改的代码文件
+      2. 识别潜在 bug 和性能问题
+      3. 自动修复简单问题
+      4. 对复杂问题创建 TODO 注释
+
+  - name: test-runner
+    description: |
+      1. 运行全部单元测试
+      2. 失败的测试自动尝试修复
+      3. 生成测试报告到 reports/test-summary.md
+
+  - name: refactor-pass
+    description: |
+      1. 识别重复代码
+      2. 提取公共函数
+      3. 优化代码结构
+      4. 确保所有测试通过
+
+  - name: documentation
+    description: |
+      1. 更新变更文件的文档注释
+      2. 生成 CHANGELOG.md 更新
+      3. 同步 README 中的 API 示例
+
+# 执行规则
+execution_rules:
+  max_iterations: 5
+  rollback_on_failure: true
+
+completion_criteria:
+  - all_tests_passing: true
+  - no_critical_issues: true
+
+notification:
+  method: file
+  path: reports/nightly-summary.md

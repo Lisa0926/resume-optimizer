@@ -60,6 +60,12 @@ class Resume(Base):
         nullable=False
     )
 
+    def __repr__(self):
+        return f"<Resume(id={self.id}, file_name='{self.file_name}')>"
+
+    def __str__(self):
+        return f"简历：{self.file_name} ({self.file_type})"
+
 
 class Tag(Base):
     """标签模型"""
@@ -81,6 +87,12 @@ class Tag(Base):
         server_default=func.now(),
         nullable=False
     )
+
+    def __repr__(self):
+        return f"<Tag(id={self.id}, name='{self.name}')>"
+
+    def __str__(self):
+        return f"标签：{self.name}"
 
 
 class OptimizationRecord(Base):

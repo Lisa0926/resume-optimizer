@@ -30,6 +30,11 @@ export const resumeAPI = {
     return response;
   },
 
+  // 获取简历文件（用于 PDF 预览）
+  getFileUrl: (id: number): string => {
+    return `/api/resumes/files/${id}`;
+  },
+
   // 更新简历标签
   update: async (id: number, data: { tags?: string[] }): Promise<Resume> => {
     const response = await apiClient.put<Resume>(`/resumes/${id}`, data);
@@ -90,6 +95,47 @@ export const optimizeAPI = {
   // 获取优化历史
   getRecords: async (resumeId: number) => {
     const response = await apiClient.get(`/optimizations/records/${resumeId}`);
+    return response;
+  },
+};
+
+// ==================== OCR API ====================
+
+export const ocrAPI = {
+  // 从图片提取文字
+  extractText: async (file: File): Promise<{ success: boolean; text: string }> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await apiClient.post<{ success: boolean; text: string }>('/ocr/extract-text', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response;
+  },
+};
+
+// ==================== ATS 评分 API ====================
+
+export const atsAPI = {
+  // 计算 ATS 评分
+  score: async (resumeContent: string, jobDescription: string): Promise<{
+    total_score: number;
+    dimensions: Record<string, any>;
+    suggestions: string[];
+  }> => {
+    const response = await apiClient.post('/ats/score', {
+      resume_content: resumeContent,
+      job_description: jobDescription,
+    });
+    return response;
+  },
+};
+
+// ==================== URL 抓取 API ====================
+
+export const urlFetchAPI = {
+  // 从 URL 获取职位描述
+  fetchJobDescription: async (url: string): Promise<{ success: boolean; title: string; content: string; url: string; error?: string }> => {
+    const response = await apiClient.post('/url/fetch-job-description', { url });
     return response;
   },
 };
