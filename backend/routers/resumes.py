@@ -27,14 +27,6 @@ settings = get_settings()
 router = APIRouter(prefix="/api/resumes", tags=["简历管理"])
 
 
-@router.on_event("startup")
-async def startup():
-    """启动时初始化数据库"""
-    await init_db()
-    # 确保上传目录存在
-    os.makedirs(settings.upload_dir, exist_ok=True)
-
-
 @router.post("/upload", response_model=ResumeResponse)
 async def upload_resume(
     file: UploadFile = File(...),

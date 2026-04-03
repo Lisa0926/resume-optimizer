@@ -1,7 +1,11 @@
 # 环境变量和敏感配置
-.env
+/.env
 .env.*
 !.env.example
+!backend/.env
+
+# Python virtual environment
+backend/venv/
 
 # Python
 __pycache__/

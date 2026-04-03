@@ -2,7 +2,8 @@
 测试 API 路由
 """
 import pytest
-from fastapi.testclient import TestClient
+from httpx import TestClient, WSGITransport
+from fastapi.testclient import TestClient as FastAPITestClient
 from main import app
 from database import get_db
 from models import Resume, Tag
@@ -18,7 +19,7 @@ class TestResumesRouter:
             yield test_db
 
         app.dependency_overrides[get_db] = override_get_db
-        client = TestClient(app)
+        client = FastAPITestClient(app)
 
         response = client.get("/api/resumes")
 
@@ -36,7 +37,7 @@ class TestResumesRouter:
             yield test_db
 
         app.dependency_overrides[get_db] = override_get_db
-        client = TestClient(app)
+        client = FastAPITestClient(app)
 
         response = client.get("/api/tags")
 
@@ -56,7 +57,7 @@ class TestTagsRouter:
             yield test_db
 
         app.dependency_overrides[get_db] = override_get_db
-        client = TestClient(app)
+        client = FastAPITestClient(app)
 
         response = client.post(
             "/api/tags",
@@ -76,7 +77,7 @@ class TestTagsRouter:
             yield test_db
 
         app.dependency_overrides[get_db] = override_get_db
-        client = TestClient(app)
+        client = FastAPITestClient(app)
 
         response = client.post(
             "/api/tags",

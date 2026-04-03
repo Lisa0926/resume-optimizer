@@ -1,7 +1,7 @@
 # 测试报告
 
 ## 执行时间
-2026-03-20 14:30:00
+2026-04-03 21:00:00
 
 ## 测试结果
 ✅ **所有测试通过** (13/13)
@@ -12,57 +12,49 @@
 | test_models.py | 4 | 0 | ✅ |
 | test_routers.py | 4 | 0 | ✅ |
 
-## 优化内容
+## 执行详情
 
-### 1. 清理 conftest.py 冗余配置
-**文件**: `backend/tests/conftest.py`
+### 测试环境
+- Python: 3.12.3
+- pytest: 9.0.2
+- pytest-asyncio: 1.3.0
 
-**删除内容**:
-- `pytest_configure()` 函数 - pytest.ini 已配置 `asyncio_mode = auto`
-- `event_loop` fixture - pytest-asyncio 0.23+ 自动管理
+### 测试输出
+```
+======================== 13 passed, 4 warnings in 0.85s ========================
 
-**理由**: pytest.ini 已设置 `asyncio_mode = auto`，无需重复配置
+tests/test_file_parser.py::TestFileParser::test_is_supported_pdf PASSED
+tests/test_file_parser.py::TestFileParser::test_is_supported_docx PASSED
+tests/test_file_parser.py::TestFileParser::test_is_supported_md PASSED
+tests/test_file_parser.py::TestFileParser::test_is_supported_unsupported PASSED
+tests/test_file_parser.py::TestFileParser::test_get_supported_extensions PASSED
+tests/test_models.py::TestModels::test_create_tag PASSED
+tests/test_models.py::TestModels::test_create_resume PASSED
+tests/test_models.py::TestModels::test_tag_repr PASSED
+tests/test_models.py::TestModels::test_resume_repr PASSED
+tests/test_routers.py::TestResumesRouter::test_list_resumes_empty PASSED
+tests/test_routers.py::TestResumesRouter::test_list_tags_empty PASSED
+tests/test_routers.py::TestTagsRouter::test_create_tag PASSED
+tests/test_routers.py::TestTagsRouter::test_create_duplicate_tag PASSED
+```
 
-### 2. 删除重复的 startup 事件处理器
-**文件**: `backend/routers/resumes.py`
+### 警告信息 (4 个)
+- 4 个 httpx 'app' shortcut 弃用警告（不影响功能）
 
-**删除内容**:
-- `@router.on_event("startup")` 装饰器
-- `startup()` 函数
-- `init_db` 导入（不再使用）
+## 本次修复的问题
 
-**理由**: `main.py` 已使用 `lifespan` 事件处理器管理应用生命周期
-
-### 3. 移除未使用的 ABC 导入
-**文件**: `backend/utils/file_parser.py`
-
-**删除内容**:
-- `from abc import ABC, abstractmethod`
-- 类继承 `ABC`（无抽象方法，无需继承）
-
-**理由**: 该类全部是 `@staticmethod` 方法，无需抽象基类
-
-### 4. 统一 API 参数风格
-**文件**: `backend/schemas.py`, `backend/routers/optimizations.py`
-
-**新增内容**:
-- `SaveOptimizationRequest` Pydantic 模型
-- 修改 `save_optimization` 使用 Pydantic 模型接收参数
-
-**理由**: 与其他 API 保持一致的参数风格
-
-### 5. 修复批量删除未清理文件问题
-**文件**: `backend/routers/resumes.py`
-
-**修改内容**:
-- 批量删除前先查询简历获取文件路径
-- 删除数据库记录前先删除物理文件
-
-**理由**: 避免删除数据库记录后遗留无用文件
-
-## 警告信息 (5 个)
-- 1 个 Pydantic class-based config 弃用警告
-- 4 个 httpx 'app' shortcut 弃用警告
+1. **重复的数据库初始化** - 移除了 main.py lifespan 中重复的 init_db 调用
+2. **冗余的 API Key 设置** - 清理了 llm_client.py 中重复的 API Key 设置
+3. **缺失的 Pydantic 模型** - 添加了 ATSScoreRequest/Response 定义
+4. **缺失的 call_llm 函数** - 添加了便捷函数供 ats.py 使用
+5. **缺失的路由导入** - 补充了 ocr_router, ats_router, url_fetch_router 导出
+6. **Pydantic Settings 配置** - 改用 SettingsConfigDict(extra='allow')
+7. **弃用的 on_event 装饰器** - 删除了 resumes.py 中的 startup 事件处理器
 
 ## 结论
-代码质量良好，所有测试通过。已完成全部 5 项优化。
+代码质量良好，所有测试通过。已完成 7 项问题修复。
+
+---
+
+**报告生成**: 夜间迭代任务 v2.0 (dev)
+**执行日期**: 2026-04-03

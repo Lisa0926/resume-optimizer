@@ -1,6 +1,6 @@
 # 每周迭代总结报告
 
-> 生成时间：2026-04-02  
+> 生成时间：2026-04-03  
 > 执行时间：每周日 05:00 (Asia/Shanghai)  
 > 飞书通知：✅ 已配置
 
@@ -15,7 +15,7 @@
 | 执行脚本 | `run-weekly-pm-task.sh` |
 | 日志文件 | `logs/cron-weekly-pm.log` |
 | 飞书通知 | ✅ 已配置 |
-| 通知目标 | `chat:oc_5cc382057eb83bc86ec2ec6367e10d14` |
+| 通知目标 | 从 `backend/.env` 读取 (`FEISHU_NIGHTLY_TASK_GROUP`) |
 | 时区 | Asia/Shanghai |
 
 ---
@@ -40,38 +40,44 @@
 
 ---
 
-## 本周 UI 修改摘要 (2026-04-02)
+## 本周 UI 修改摘要 (2026-04-03)
 
 ### 修改组件
 
 | 组件 | 修改内容 | 影响范围 |
 |------|---------|---------|
-| `EmptyState.tsx` | 深色模式适配、内阴影效果、图标颜色优化 | 所有空状态页面 |
-| `OnboardingGuide.tsx` | 深色模式适配、三色渐变进度条、毛玻璃效果、按钮动效增强 | 新用户引导弹窗 |
+| `Navbar.tsx` | 深色模式适配、导航链接颜色优化、过渡动画 | 全局导航栏 |
+| `TagsPage.tsx` | 深色模式全面适配、阴影优化、hover 反馈 | 标签管理页面 |
 
 ### 改进详情
 
-**EmptyState 组件：**
-- ✅ 新增深色模式支持（`dark:from-indigo-900/50 dark:to-purple-900/50`）
-- ✅ 增加内阴影效果（`shadow-inner`）
-- ✅ 图标颜色深色模式自动调整
+**Navbar 组件：**
+- ✅ 新增深色模式背景（`dark:bg-gray-900`）
+- ✅ 边框深色模式适配（`dark:border-gray-800`）
+- ✅ 导航链接文字深色模式优化（`dark:text-gray-300`）
+- ✅ hover 状态深色模式适配（`dark:hover:bg-gray-800`）
+- ✅ Logo 图标阴影增强
+- ✅ 颜色过渡动画（`transition-colors duration-300`）
 
-**OnboardingGuide 组件：**
-- ✅ 背景遮罩升级为毛玻璃效果（`backdrop-blur-sm`）
-- ✅ 进度条三色渐变（indigo → purple → pink）
-- ✅ "开始使用"按钮增加 hover 缩放动效
-- ✅ 完整的深色模式适配
+**TagsPage 组件：**
+- ✅ 页面背景深色模式渐变
+- ✅ 标题和描述文字深色模式适配
+- ✅ 表单容器深色背景 + 阴影优化
+- ✅ 输入框深色模式完整适配
+- ✅ 加载/空状态深色模式支持
+- ✅ 标签列表项 hover 深色模式优化
+- ✅ 删除按钮深色模式 hover 反馈
 
 ### 设计对标
 
-参考竞品：Canva、LinkedIn、超级简历
+参考竞品：Canva、LinkedIn、超级简历、Resume.io
 
 | 设计元素 | 改进前 | 改进后 |
 |---------|--------|--------|
-| 深色模式 | ⚠️ 部分 | ✅ 完整 |
-| 渐变进度条 | 双色 | 三色 |
-| 毛玻璃效果 | ❌ | ✅ |
-| 按钮动效 | 基础 | 增强 |
+| 深色模式覆盖 | 部分页面 | ✅ 核心页面 |
+| 导航栏深色适配 | ⚠️ 基础 | ✅ 完整 |
+| 标签页深色适配 | ❌ | ✅ 完整 |
+| 过渡动画 | 基础 | ✅ 增强 |
 
 ---
 
@@ -80,9 +86,16 @@
 | 类型 | 数量 | 文件 |
 |------|------|------|
 | 新增文件 | 0 | - |
-| 修改文件 | 2 | `EmptyState.tsx`, `OnboardingGuide.tsx` |
+| 修改文件 | 4 | `Navbar.tsx`, `TagsPage.tsx`, competitive-analysis.md, product-backlog.md, ui-changelog.md, weekly-summary.md |
 | 删除文件 | 0 | - |
 | 生成报告 | 4 | competitive-analysis.md, product-backlog.md, ui-changelog.md, weekly-summary.md |
+
+### 前端修改
+
+```
+frontend/src/components/Navbar.tsx    - 深色模式适配
+frontend/src/pages/TagsPage.tsx       - 深色模式全面适配
+```
 
 ---
 
@@ -98,9 +111,28 @@
 
 ---
 
+## 本周新增洞察（2026-04-03）
+
+### Resume.io 分析
+
+本周新增分析了 Resume.io，作为欧美市场主流简历工具，核心优势：
+
+1. **ATS 评分系统** - 行业首创，分析简历格式、关键词密度、可读性
+2. **模板专业度** - 针对欧美企业 HR 偏好设计，通过 ATS 系统验证
+3. **求职信生成** - AI 根据 JD 自动生成求职信
+
+### 对本书的启发
+
+1. ATS 评分是欧美市场标配，国内竞品普遍缺失
+2. 实时预览是用户信任的基础
+3. 深色模式已成为基础体验需求（本产品已支持）
+4. 标签管理是本产品的差异化优势，应继续强化
+
+---
+
 ## 下周执行计划
 
-**时间**: 2026-04-09 (周日) 05:00
+**时间**: 2026-04-10 (周日) 05:00
 
 **自动执行**:
 1. 竞品分析更新
@@ -132,8 +164,19 @@ reports/
 
 ## 备注
 
-- ✅ 本周 UI 改进已完成深色模式适配
-- ✅ 竞品分析覆盖 4 款主流产品
+- ✅ 本周 UI 改进已完成深色模式适配（Navbar、TagsPage）
+- ✅ 竞品分析覆盖 5 款主流产品（新增 Resume.io）
 - ✅ 产品待办列表已按 P0/P1/P2 优先级排序
 - ⚠️ 所有 P0 级功能开发任务已暂停，等待用户批准
-- 📅 下次执行：2026-04-09 05:00
+- 📅 下次执行：2026-04-10 05:00
+
+---
+
+## 执行完成确认
+
+| 任务 | 状态 | 输出文件 |
+|------|------|---------|
+| competitive-analysis | ✅ 完成 | `reports/competitive-analysis.md` |
+| product-planning | ✅ 完成 | `reports/product-backlog.md` |
+| ui-ux-improvement | ✅ 完成 | `reports/ui-changelog.md` |
+| generate-summary | ✅ 完成 | `reports/weekly-summary.md` |

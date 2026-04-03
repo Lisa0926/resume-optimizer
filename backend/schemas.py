@@ -1,7 +1,7 @@
 """
 Pydantic 请求/响应模型
 """
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 from datetime import datetime
 from typing import Optional
 
@@ -97,6 +97,15 @@ class OptimizeRequest(BaseModel):
     prompt: Optional[str] = Field(None, description="自定义 Prompt 模板")
     mode: str = Field(default="optimize", description="优化模式：optimize=智能优化，match=匹配优化，translate=翻译")
 
+    @field_validator('mode')
+    @classmethod
+    def validate_mode(cls, v: str) -> str:
+        """验证优化模式"""
+        allowed_modes = {"optimize", "match", "translate"}
+        if v not in allowed_modes:
+            raise ValueError(f"mode 必须是 {allowed_modes} 之一")
+        return v
+
 
 class OptimizeResponse(BaseModel):
     """优化响应"""
@@ -116,3 +125,18 @@ class ErrorResponse(BaseModel):
     """错误响应"""
     detail: str
     success: bool = False
+
+
+# ==================== ATS 评分相关 ====================
+
+class ATSScoreRequest(BaseModel):
+    """ATS 评分请求"""
+    resume_content: str = Field(..., min_length=1, description="简历内容")
+    job_description: str = Field(..., min_length=1, description="职位描述")
+
+
+class ATSScoreResponse(BaseModel):
+    """ATS 评分响应"""
+    total_score: float
+    dimensions: dict
+    suggestions: list[str]

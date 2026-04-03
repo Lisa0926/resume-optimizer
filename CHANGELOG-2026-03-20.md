@@ -13,7 +13,7 @@
 **配置项**:
 | 配置项 | 值 |
 |--------|-----|
-| 飞书群聊 ID | `chat:oc_5cc382057eb83bc86ec2ec6367e10d14` |
+| 飞书群聊 ID | 从 `backend/.env` 读取 (`FEISHU_NIGHTLY_TASK_GROUP`) |
 | 通知内容 | 任务状态、执行摘要、日志摘要 |
 | 发送方式 | openclaw message send |
 
@@ -234,7 +234,7 @@ tail -f logs/nightly-*.log
 
 ### openclaw 配置
 - 飞书通道：已启用
-- 目标群聊：`chat:oc_5cc382057eb83bc86ec2ec6367e10d14`
+- 目标群聊：从 `backend/.env` 读取 (`FEISHU_NIGHTLY_TASK_GROUP`)
 - 自动批准：pytest, bash *, edit *, write *
 
 ### 后端配置

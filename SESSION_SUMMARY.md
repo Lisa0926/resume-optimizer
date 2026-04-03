@@ -94,5 +94,5 @@ cd /home/lisa/claude_apps/resume-optimizer && bash run-night-job.sh
 ---
 
 ## 飞书通知配置
-- 目标群聊 ID: `chat:oc_5cc382057eb83bc86ec2ec6367e10d14`
+- 目标群聊 ID: 从 `backend/.env` 读取 (`FEISHU_NIGHTLY_TASK_GROUP`)
 - 自动批准命令：pytest, python -m pytest, bash *, edit *, write *

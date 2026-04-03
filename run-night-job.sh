@@ -8,12 +8,16 @@
 export PATH="/usr/local/node/bin:$PATH"
 
 # 2. 加载环境变量 (用于 claude 认证)
-# 从 .env 文件加载敏感配置，确保不要硬编码 API Key
-if [ -f "$PROJECT_ROOT/.env" ]; then
-    export $(grep -v '^#' "$PROJECT_ROOT/.env" | xargs)
+# 从 backend/.env 文件加载所有敏感配置
+ENV_FILE="$PROJECT_ROOT/backend/.env"
+if [ -f "$ENV_FILE" ]; then
+    export $(grep -v '^#' "$ENV_FILE" | xargs)
+    echo "[Cron] 已加载环境变量：$ENV_FILE" >> logs/cron-nightly.log
 fi
-export ANTHROPIC_BASE_URL="https://coding.dashscope.aliyuncs.com/apps/anthropic"
-export ANTHROPIC_MODEL="qwen3.5-plus"
+
+# 设置默认值（如果 .env 中未配置）
+export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://coding.dashscope.aliyuncs.com/apps/anthropic}"
+export ANTHROPIC_MODEL="${ANTHROPIC_MODEL:-qwen3.5-plus}"
 
 # 3. 定义项目根目录
 PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
@@ -51,7 +55,7 @@ $CLAUDE_CMD -p \
 EXIT_CODE=$?
 
 # 8. 记录执行结果并发送飞书通知
-REPORT_TARGET="chat:oc_5cc382057eb83bc86ec2ec6367e10d14"
+REPORT_TARGET="${FEISHU_NIGHTLY_TASK_GROUP:-chat:oc_5cc382057eb83bc86ec2ec6367e10d14}"
 OPENCLAW_CMD="/usr/local/node/bin/openclaw"
 
 # 获取任务摘要（最后 20 行）

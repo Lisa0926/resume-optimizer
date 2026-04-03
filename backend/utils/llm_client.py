@@ -22,9 +22,8 @@ class LLMClient:
         """
         self.api_key = api_key
         self.model = model
-        # 显式设置 API key，确保 SDK 能正确识别
+        # 设置 API key，确保 SDK 能正确识别
         Generation.api_key = api_key
-        os.environ["DASHSCOPE_API_KEY"] = api_key
 
     async def optimize_resume(
         self,
@@ -197,3 +196,46 @@ class LLMClient:
     def validate_api_key(api_key: str) -> bool:
         """验证 API Key 格式"""
         return bool(api_key and len(api_key) >= 10)
+
+
+def call_llm(
+    prompt: str,
+    api_key: Optional[str] = None,
+    model: str = "qwen-max",
+    temperature: float = 0.7,
+    system_prompt: Optional[str] = None
+) -> str:
+    """
+    调用 LLM API 的便捷函数
+
+    Args:
+        prompt: 用户提示
+        api_key: API Key，默认从环境变量获取
+        model: 模型名称
+        temperature: 温度参数
+        system_prompt: 系统提示
+
+    Returns:
+        LLM 生成的文本
+    """
+    api_key = api_key or os.getenv("DASHSCOPE_API_KEY")
+    if not api_key:
+        raise ValueError("未设置 API Key")
+
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+    messages.append({"role": "user", "content": prompt})
+
+    response = Generation.call(
+        model=model,
+        messages=messages,
+        result_format="message",
+        api_key=api_key,
+        temperature=temperature
+    )
+
+    if response.status_code == 200:
+        return response.output.choices[0].message.content
+    else:
+        raise Exception(f"LLM API 调用失败：{response.code} - {response.message}")

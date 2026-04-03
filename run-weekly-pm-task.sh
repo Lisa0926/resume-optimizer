@@ -9,12 +9,16 @@
 export PATH="/usr/local/node/bin:$PATH"
 
 # 2. 加载环境变量
-# 从 .env 文件加载敏感配置，确保不要硬编码 API Key
-if [ -f "$PROJECT_ROOT/.env" ]; then
-    export $(grep -v '^#' "$PROJECT_ROOT/.env" | xargs)
+# 从 backend/.env 文件加载所有敏感配置
+ENV_FILE="$PROJECT_ROOT/backend/.env"
+if [ -f "$ENV_FILE" ]; then
+    export $(grep -v '^#' "$ENV_FILE" | xargs)
+    echo "[Weekly-PM] 已加载环境变量：$ENV_FILE" >> logs/weekly-pm.log
 fi
-export ANTHROPIC_BASE_URL="https://coding.dashscope.aliyuncs.com/apps/anthropic"
-export ANTHROPIC_MODEL="qwen3.5-plus"
+
+# 设置默认值（如果 .env 中未配置）
+export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://coding.dashscope.aliyuncs.com/apps/anthropic}"
+export ANTHROPIC_MODEL="${ANTHROPIC_MODEL:-qwen3.5-plus}"
 
 # 3. 定义项目根目录
 PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
@@ -66,7 +70,7 @@ $CLAUDE_CMD -p "
 EXIT_CODE=$?
 
 # 8. 生成微信通知内容
-REPORT_TARGET="o9cq80_InP5uVuzcLAwtbXAXg33E@im.wechat"
+REPORT_TARGET="${WEIXIN_REPORT_TARGET:-o9cq80_InP5uVuzcLAwtbXAXg33E@im.wechat}"
 OPENCLAW_CMD="/usr/local/node/bin/openclaw"
 
 # 获取执行摘要（最后 30 行）

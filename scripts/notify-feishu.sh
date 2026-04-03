@@ -1,9 +1,16 @@
 #!/bin/bash
 # 飞书通知脚本 - 每周迭代报告生成后发送通知
 
-FEISHU_CHAT_ID="chat:oc_5cc382057eb83bc86ec2ec6367e10d14"
+# 从 backend/.env 加载环境变量
+ENV_FILE="$(cd "$(dirname "$0")/.." && pwd)/backend/.env"
+if [ -f "$ENV_FILE" ]; then
+    export $(grep -v '^#' "$ENV_FILE" | xargs) 2>/dev/null
+fi
+
+# 飞书配置（从环境变量读取，默认值作为后备）
+FEISHU_CHAT_ID="${FEISHU_NIGHTLY_TASK_GROUP:-chat:oc_5cc382057eb83bc86ec2ec6367e10d14}"
 REPORT_PATH="/home/lisa/claude_apps/resume-optimizer/reports/weekly-summary.md"
-MANUAL_URL="https://claude-apps.com"
+MANUAL_URL="${CLAUDE_APPS_URL:-https://claude-apps.com}"
 
 # 读取报告内容，提取关键信息
 if [ -f "$REPORT_PATH" ]; then

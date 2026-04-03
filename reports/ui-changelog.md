@@ -1,12 +1,12 @@
 # UI 修改日志
 
-> 执行日期：2026-04-02
-> 任务来源：每周 PM 审计 - weekly-pm-audit.yaml
+> 执行日期：2026-04-03  
+> 任务来源：每周 PM 审计 - weekly-pm-audit.yaml  
 > 执行类型：P0 级 UI 改进（直接执行）
 
 ---
 
-## 2026-04-02 - P0 级 UI 改进
+## 2026-04-03 - P0 级 UI 改进
 
 ### 改进概述
 
@@ -16,85 +16,83 @@
 
 | 组件 | 修改内容 | 改进点 |
 |------|---------|--------|
-| `EmptyState.tsx` | 深色模式适配、视觉增强 | 暗色背景对比度、阴影效果 |
-| `OnboardingGuide.tsx` | 深色模式适配、动效增强 | 渐变进度条、hover 反馈、暗色主题 |
+| `Navbar.tsx` | 深色模式适配、导航链接颜色优化 | 暗色主题支持、hover 反馈增强 |
+| `TagsPage.tsx` | 深色模式全面适配 | 完整暗色主题、阴影优化 |
 
 ### 详细修改
 
-#### 1. EmptyState 组件 (EmptyState.tsx)
+#### 1. Navbar 组件 (Navbar.tsx)
 
-**修改前：**
-```tsx
-<div className="h-24 w-24 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full">
-  {icon}
-</div>
-<h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
-<p className="text-gray-500 mb-6 max-w-md mx-auto">{description}</p>
-```
+**修改内容：**
 
-**修改后：**
 ```tsx
-<div className="h-24 w-24 bg-gradient-to-br from-indigo-100 to-purple-100 
-                dark:from-indigo-900/50 dark:to-purple-900/50 
-                rounded-full shadow-inner">
-  <div className="text-gray-400 dark:text-gray-500">{icon}</div>
-</div>
-<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{title}</h3>
-<p className="text-gray-500 dark:text-gray-400 mb-6 max-w-md mx-auto">{description}</p>
+// 深色模式导航栏背景
+<nav className="bg-white dark:bg-gray-900 shadow-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300">
+
+// Logo 阴影增强
+<div className="h-9 w-9 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+
+// 导航链接深色模式适配
+className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+  isActive
+    ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md'
+    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+}`}
 ```
 
 **改进点：**
-- ✅ 新增深色模式支持（`dark:` 类）
-- ✅ 增加内阴影效果（`shadow-inner`）
-- ✅ 图标颜色在深色模式下自动调整
-- ✅ 标题和描述文字深色模式适配
+- ✅ 新增深色模式背景支持（`dark:bg-gray-900`）
+- ✅ 边框深色模式适配（`dark:border-gray-800`）
+- ✅ 导航链接文字颜色深色模式优化
+- ✅ hover 状态深色模式适配
+- ✅ Logo 图标阴影增强
+- ✅ 添加过渡动画（`transition-colors duration-300`）
 
 ---
 
-#### 2. OnboardingGuide 组件 (OnboardingGuide.tsx)
+#### 2. TagsPage 组件 (TagsPage.tsx)
 
-**主要改进：**
-
-1. ** backdrop 增强**
-   - 背景遮罩从 `bg-black/50` 改为 `bg-black/60`，增加聚焦感
-   - 新增 `backdrop-blur-sm` 毛玻璃效果
-
-2. **深色模式适配**
-   - 弹窗背景：`dark:bg-gray-900`
-   - 边框：`dark:border-gray-700`
-   - 文字颜色：`dark:text-gray-100/400/300`
-   - 图标颜色：`dark:text-indigo-400`
-
-3. **进度条优化**
-   - 从双色渐变改为三色渐变：`from-indigo-500 via-purple-500 to-pink-500`
-   - 更丰富的视觉效果
-
-4. **按钮交互增强**
-   - "开始使用"按钮：三色渐变 + hover 缩放动效
-   - 禁用状态深色模式适配
-   - hover 背景色深色模式适配
-
-5. **提示信息优化**
-   - 深色模式提示框：`dark:bg-indigo-900/30`
-   - 边框深色模式：`dark:border-indigo-800`
-   - 文字颜色：`dark:text-indigo-300`
-
-**修改片段示例：**
+**修改内容：**
 
 ```tsx
-// 深色模式按钮 hover 适配
-className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
-  currentStep === 0
-    ? 'text-gray-300 dark:text-gray-600 cursor-not-allowed'
-    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-}`}
+// 页面背景深色模式
+<div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-8">
 
-// 开始使用按钮增强
-className="px-6 py-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 
-           text-white font-medium rounded-lg 
-           hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 
-           transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+// 标题文字
+<h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+
+// 表单容器
+<div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg dark:shadow-gray-800/50 p-6 mb-6 border border-gray-100 dark:border-gray-800">
+
+// 输入框
+<input
+  className="flex-1 rounded-xl border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 focus:border-indigo-500 focus:ring-indigo-500"
+
+// 加载状态
+<div className="text-center py-16 bg-white dark:bg-gray-900 rounded-2xl shadow-lg dark:shadow-gray-800/50 border border-gray-100 dark:border-gray-800">
+  <p className="text-gray-500 dark:text-gray-400">加载中...</p>
+
+// 标签列表项
+<div className="flex justify-between items-center px-6 py-4 
+  hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 
+  dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200">
+
+// 删除按钮
+<button className="p-3 text-gray-400 dark:text-gray-500 
+  hover:text-red-600 dark:hover:text-red-400 
+  hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl">
 ```
+
+**改进点：**
+- ✅ 页面背景深色模式渐变
+- ✅ 标题和描述文字深色模式适配
+- ✅ 表单容器深色背景 + 阴影优化（`dark:shadow-gray-800/50`）
+- ✅ 输入框深色模式完整适配
+- ✅ 加载状态深色模式支持
+- ✅ 空状态深色模式支持
+- ✅ 标签列表项 hover 深色模式优化
+- ✅ 删除按钮深色模式 hover 反馈
+- ✅ 边框颜色深色模式统一
 
 ---
 
@@ -105,10 +103,10 @@ className="px-6 py-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
 | 设计元素 | Canva | LinkedIn | 本产品 (改进后) |
 |---------|-------|----------|---------------|
 | 深色模式 | ❌ | ✅ | ✅ |
-| 渐变进度条 | ✅ | ❌ | ✅ (三色) |
-| 毛玻璃效果 | ✅ | ✅ | ✅ |
-| 按钮动效 | ✅ | ⚠️ | ✅ (缩放) |
-| 空状态视觉 | ✅ | ❌ | ✅ |
+| 导航栏固定 | ✅ | ✅ | ✅ |
+| 渐变背景 | ✅ | ❌ | ✅ |
+| 过渡动画 | ✅ | ⚠️ | ✅ |
+| 阴影层次 | ✅ | ⚠️ | ✅ |
 
 ---
 
@@ -116,13 +114,20 @@ className="px-6 py-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
 
 - [x] 所有修改组件支持深色模式
 - [x] 渐变配色保持一致性（紫/粉/靛蓝）
-- [x] hover 动效流畅（transition-all duration-300）
+- [x] hover 动效流畅（transition-all duration-200/300）
 - [x] 对比度符合 WCAG 标准
 - [x] 无破坏性变更
 
 ---
 
 ## 历史变更
+
+### 2026-04-02 - 空状态和引导组件优化
+
+| 组件 | 修改内容 |
+|------|---------|
+| `EmptyState.tsx` | 深色模式适配、内阴影效果、图标颜色优化 |
+| `OnboardingGuide.tsx` | 深色模式适配、三色渐变进度条、毛玻璃效果、按钮动效增强 |
 
 ### 2026-03-20 - 初始 UI 优化
 

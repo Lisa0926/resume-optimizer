@@ -1,7 +1,7 @@
 """
 应用配置管理
 """
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import lru_cache
 import os
 
@@ -11,6 +11,8 @@ BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class Settings(BaseSettings):
     """应用配置"""
+
+    model_config = SettingsConfigDict(extra='allow', env_file=os.path.join(BACKEND_DIR, ".env"), env_file_encoding='utf-8')
 
     # 应用基础配置
     app_name: str = "智能简历优化器"
@@ -44,10 +46,6 @@ class Settings(BaseSettings):
         "http://localhost:5173",
         "http://127.0.0.1:5173",
     ]
-
-    class Config:
-        env_file = os.path.join(BACKEND_DIR, ".env")
-        env_file_encoding = "utf-8"
 
 
 @lru_cache

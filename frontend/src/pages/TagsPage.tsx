@@ -54,23 +54,23 @@ function TagsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* 页面标题 */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">标签管理</h1>
-          <p className="text-gray-500">创建和管理简历分类标签，方便组织和筛选简历</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">标签管理</h1>
+          <p className="text-gray-500 dark:text-gray-400">创建和管理简历分类标签，方便组织和筛选简历</p>
         </div>
 
         {/* 创建标签表单 */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg dark:shadow-gray-800/50 p-6 mb-6 border border-gray-100 dark:border-gray-800">
           <form onSubmit={handleCreate} className="flex gap-3">
             <input
               type="text"
               value={newTagName}
               onChange={(e) => setNewTagName(e.target.value)}
               placeholder="输入标签名称，如：前端、后端、产品经理..."
-              className="flex-1 rounded-xl border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+              className="flex-1 rounded-xl border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 focus:border-indigo-500 focus:ring-indigo-500"
             />
             <button
               type="submit"
@@ -87,28 +87,28 @@ function TagsPage() {
 
         {/* 标签列表 */}
         {loading ? (
-          <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
+          <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-2xl shadow-lg dark:shadow-gray-800/50 border border-gray-100 dark:border-gray-800">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-            <p className="text-gray-500">加载中...</p>
+            <p className="text-gray-500 dark:text-gray-400">加载中...</p>
           </div>
         ) : tags.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
-            <TagIcon className="h-20 w-20 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-gray-900 mb-2">暂无标签</h3>
-            <p className="text-gray-500 mb-6">创建第一个标签开始使用</p>
+          <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-2xl shadow-lg dark:shadow-gray-800/50 border border-gray-100 dark:border-gray-800">
+            <TagIcon className="h-20 w-20 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-gray-900 dark:text-gray-100 mb-2">暂无标签</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6">创建第一个标签开始使用</p>
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-lg divide-y divide-gray-100">
-            <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-t-2xl">
-              <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg dark:shadow-gray-800/50 border border-gray-100 dark:border-gray-800">
+            <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-t-2xl">
+              <p className="text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                 共 {tags.length} 个标签
               </p>
             </div>
             {tags.map((tag, index) => (
               <div
                 key={tag.id}
-                className="flex justify-between items-center px-6 py-4 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 transition-all duration-200
-                  first:rounded-t-none last:rounded-b-none"
+                className="flex justify-between items-center px-6 py-4 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200
+                  first:rounded-t-none last:rounded-b-none border-b border-gray-100 dark:border-gray-800 last:border-b-0"
                 style={{ borderRadius: index === 0 ? '0' : '0' }}
               >
                 <div className="flex items-center gap-4">
@@ -117,15 +117,15 @@ function TagsPage() {
                     <TagIcon className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-lg">{tag.name}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">{tag.name}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       创建于 {new Date(tag.created_at).toLocaleDateString('zh-CN')}
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => handleDelete(tag.id)}
-                  className="p-3 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all duration-200"
+                  className="p-3 text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all duration-200"
                 >
                   <TrashIcon className="h-5 w-5" />
                 </button>
