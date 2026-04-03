@@ -8,7 +8,7 @@ if [ -f "$ENV_FILE" ]; then
 fi
 
 # 飞书配置（从环境变量读取，默认值作为后备）
-FEISHU_CHAT_ID="${FEISHU_NIGHTLY_TASK_GROUP:-chat:oc_5cc382057eb83bc86ec2ec6367e10d14}"
+FEISHU_CHAT_ID="${FEISHU_NIGHTLY_TASK_GROUP:-YOUR_FEISHU_CHAT_ID_HERE}"
 REPORT_PATH="/home/lisa/claude_apps/resume-optimizer/reports/weekly-summary.md"
 MANUAL_URL="${CLAUDE_APPS_URL:-https://claude-apps.com}"
 

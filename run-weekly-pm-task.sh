@@ -70,7 +70,7 @@ $CLAUDE_CMD -p "
 EXIT_CODE=$?
 
 # 8. 生成微信通知内容
-REPORT_TARGET="${WEIXIN_REPORT_TARGET:-o9cq80_InP5uVuzcLAwtbXAXg33E@im.wechat}"
+REPORT_TARGET="${WEIXIN_REPORT_TARGET:-YOUR_WEIXIN_USER_ID_HERE}"
 OPENCLAW_CMD="/usr/local/node/bin/openclaw"
 
 # 获取执行摘要（最后 30 行）

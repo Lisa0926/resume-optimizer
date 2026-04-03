@@ -55,7 +55,7 @@ $CLAUDE_CMD -p \
 EXIT_CODE=$?
 
 # 8. 记录执行结果并发送飞书通知
-REPORT_TARGET="${FEISHU_NIGHTLY_TASK_GROUP:-chat:oc_5cc382057eb83bc86ec2ec6367e10d14}"
+REPORT_TARGET="${FEISHU_NIGHTLY_TASK_GROUP:-YOUR_FEISHU_CHAT_ID_HERE}"
 OPENCLAW_CMD="/usr/local/node/bin/openclaw"
 
 # 获取任务摘要（最后 20 行）

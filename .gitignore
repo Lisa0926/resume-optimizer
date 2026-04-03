@@ -2,7 +2,7 @@
 /.env
 .env.*
 !.env.example
-!backend/.env
+CLAUDE.md
 
 # Python virtual environment
 backend/venv/

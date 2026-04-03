@@ -17,8 +17,8 @@ TITLE="${2:-任务通知}"
 CONTENT="${3:-}"
 
 # 飞书群聊 ID 配置（从环境变量读取，默认值作为后备）
-NIGHTLY_TASK_GROUP="${FEISHU_NIGHTLY_TASK_GROUP:-chat:oc_5cc382057eb83bc86ec2ec6367e10d14}"  # 夜间任务群
-NEWS_GROUP="${FEISHU_NEWS_GROUP:-chat:oc_a06b8d3aaf54247f117afe4aeac55fd1}"          # 新闻推送群
+NIGHTLY_TASK_GROUP="${FEISHU_NIGHTLY_TASK_GROUP:-YOUR_FEISHU_CHAT_ID_HERE}"  # 夜间任务群
+NEWS_GROUP="${FEISHU_NEWS_GROUP:-YOUR_FEISHU_CHAT_ID_HERE}"          # 新闻推送群
 
 # 检查 openclaw 命令
 OPENCLAW_CMD="/usr/local/node/bin/openclaw"
