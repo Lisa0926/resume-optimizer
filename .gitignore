@@ -8,6 +8,7 @@
 .env.*
 !.env.sample
 backend/.env
+backend/.env.sample
 frontend/.env
 
 # Python
