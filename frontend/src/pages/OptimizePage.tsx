@@ -860,15 +860,15 @@ function OptimizePage() {
   const isMatchMode = selectedMode === 'match';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* 页面标题 */}
         <div className="mb-8 text-center">
           <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg mb-4">
             <SparklesIcon className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">简历智能优化</h1>
-          <p className="text-gray-500 max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">简历智能优化</h1>
+          <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
             选择已上传的简历，使用 AI 能力进行优化、匹配或翻译
           </p>
         </div>

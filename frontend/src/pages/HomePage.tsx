@@ -39,7 +39,7 @@ function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 transition-colors duration-300">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -62,7 +62,7 @@ function HomePage() {
             <Link
               key={item.title}
               to={item.to}
-              className={`group relative bg-white rounded-2xl shadow-lg p-8
+              className={`group relative bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8
                 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl
                 ${item.hoverColor} bg-gradient-to-br ${item.color}`}
             >
@@ -96,12 +96,12 @@ function HomePage() {
 
       {/* Quick Actions */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8 border border-gray-100 dark:border-gray-800">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-800">最近简历</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">最近简历</h2>
             <Link
               to="/resumes"
-              className="text-indigo-600 hover:text-indigo-800 font-medium flex items-center"
+              className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium flex items-center"
             >
               查看全部
               <svg
@@ -122,8 +122,8 @@ function HomePage() {
 
           {recentResumes.length === 0 ? (
             <div className="text-center py-12">
-              <DocumentTextIcon className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 mb-4">暂无简历</p>
+              <DocumentTextIcon className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-500 dark:text-gray-400 mb-4">暂无简历</p>
               <Link
                 to="/resumes"
                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500
@@ -139,15 +139,15 @@ function HomePage() {
               {recentResumes.map((resume) => (
                 <div
                   key={resume.id}
-                  className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
+                  className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
                   <div className="flex items-center space-x-4">
                     <div className="h-10 w-10 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-lg flex items-center justify-center">
                       <DocumentTextIcon className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-800">{resume.file_name}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-gray-800 dark:text-gray-200">{resume.file_name}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         {new Date(resume.created_at).toLocaleDateString('zh-CN')}
                       </p>
                     </div>

@@ -202,12 +202,12 @@ function ResumesPage() {
   const totalPages = Math.ceil(total / pageSize);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 py-8 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* 页面标题 */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">简历管理</h1>
-          <p className="text-gray-500">管理您的简历文件，支持 PDF、DOCX、MD、TXT 格式</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">简历管理</h1>
+          <p className="text-gray-500 dark:text-gray-400">管理您的简历文件，支持 PDF、DOCX、MD、TXT 格式</p>
         </div>
 
         {/* 上传区域 */}
@@ -217,8 +217,8 @@ function ResumesPage() {
           onDrop={handleDrop}
           className={`mb-8 border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 cursor-pointer
             ${isDragOver
-              ? 'border-indigo-500 bg-indigo-50 scale-[1.02]'
-              : 'border-gray-300 bg-white hover:border-indigo-400 hover:bg-gray-50'
+              ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 scale-[1.02]'
+              : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-800'
             }`}
           onClick={() => fileInputRef.current?.click()}
         >
@@ -233,15 +233,15 @@ function ResumesPage() {
           {uploading ? (
             <div className="flex flex-col items-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
-              <p className="text-gray-600 font-medium">上传中...</p>
+              <p className="text-gray-600 dark:text-gray-300 font-medium">上传中...</p>
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <CloudArrowUpIcon className={`h-16 w-16 mb-4 ${isDragOver ? 'text-indigo-600' : 'text-gray-400'}`} />
-              <p className="text-lg font-medium text-gray-700 mb-2">
+              <CloudArrowUpIcon className={`h-16 w-16 mb-4 ${isDragOver ? 'text-indigo-600' : 'text-gray-400 dark:text-gray-500'}`} />
+              <p className="text-lg font-medium text-gray-700 dark:text-gray-200 mb-2">
                 {isDragOver ? '释放以上传文件' : '点击或拖拽文件到此处上传'}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 支持格式：PDF、DOCX、MD、TXT（最大 10MB）
               </p>
             </div>
@@ -264,15 +264,15 @@ function ResumesPage() {
 
         {/* 简历列表 */}
         {loading ? (
-          <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
+          <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-            <p className="text-gray-500">加载中...</p>
+            <p className="text-gray-500 dark:text-gray-400">加载中...</p>
           </div>
         ) : resumes.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
-            <FolderOpenIcon className="h-20 w-20 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-gray-900 mb-2">暂无简历</h3>
-            <p className="text-gray-500 mb-6">上传第一份简历开始使用</p>
+          <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800">
+            <FolderOpenIcon className="h-20 w-20 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-gray-900 dark:text-gray-100 mb-2">暂无简历</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6">上传第一份简历开始使用</p>
             <button
               onClick={() => fileInputRef.current?.click()}
               className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500
@@ -285,44 +285,44 @@ function ResumesPage() {
           </div>
         ) : (
           <>
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-800">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700">
                   <tr>
                     <th className="px-6 py-4 text-left">
                       <input
                         type="checkbox"
                         checked={selectedResumes.length === resumes.length}
                         onChange={toggleSelectAll}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                        className="rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
                       />
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
                       文件名
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
                       类型
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
                       标签
                     </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
                       创建时间
                     </th>
-                    <th className="px-6 py-4 text-right text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                    <th className="px-6 py-4 text-right text-sm font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
                       操作
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                   {resumes.map((resume) => (
-                    <tr key={resume.id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={resume.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                       <td className="px-6 py-4">
                         <input
                           type="checkbox"
                           checked={selectedResumes.includes(resume.id)}
                           onChange={() => toggleSelectResume(resume.id)}
-                          className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                          className="rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
                         />
                       </td>
                       <td className="px-6 py-4">
@@ -331,10 +331,10 @@ function ResumesPage() {
                             <DocumentTextIcon className="h-5 w-5 text-white" />
                           </div>
                           <div className="min-w-0 flex-1">
-                            <p className="font-medium text-gray-900 truncate">{resume.file_name}</p>
+                            <p className="font-medium text-gray-900 dark:text-gray-100 truncate">{resume.file_name}</p>
                             <button
                               onClick={() => setPreviewResume(resume)}
-                              className="text-sm text-indigo-600 hover:text-indigo-800 font-medium inline-flex items-center mt-1"
+                              className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium inline-flex items-center mt-1"
                             >
                               <EyeIcon className="h-4 w-4 mr-1" />
                               预览内容
@@ -369,7 +369,7 @@ function ResumesPage() {
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-600">
+                      <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">
                         {new Date(resume.created_at).toLocaleDateString('zh-CN', {
                           year: 'numeric',
                           month: '2-digit',
@@ -380,14 +380,14 @@ function ResumesPage() {
                         <div className="flex justify-end gap-2">
                           <button
                             onClick={() => openTagModal(resume)}
-                            className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                            className="p-2 text-gray-400 dark:text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors"
                             title="管理标签"
                           >
                             <TagIcon className="h-5 w-5" />
                           </button>
                           <button
                             onClick={() => handleDelete(resume.id)}
-                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="p-2 text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                             title="删除"
                           >
                             <TrashIcon className="h-5 w-5" />
@@ -401,29 +401,29 @@ function ResumesPage() {
             </div>
 
             {/* 分页 */}
-            <div className="mt-6 flex justify-between items-center bg-white rounded-xl shadow-lg px-6 py-4">
-              <p className="text-sm text-gray-600">
-                显示 <span className="font-medium text-gray-900">{(currentPage - 1) * pageSize + 1}</span> -{' '}
-                <span className="font-medium text-gray-900">{Math.min(currentPage * pageSize, total)}</span>{' '}
-                共 <span className="font-medium text-gray-900">{total}</span> 条
+            <div className="mt-6 flex justify-between items-center bg-white dark:bg-gray-900 rounded-xl shadow-lg px-6 py-4 border border-gray-100 dark:border-gray-800">
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                显示 <span className="font-medium text-gray-900 dark:text-gray-100">{(currentPage - 1) * pageSize + 1}</span> -{' '}
+                <span className="font-medium text-gray-900 dark:text-gray-100">{Math.min(currentPage * pageSize, total)}</span>{' '}
+                共 <span className="font-medium text-gray-900 dark:text-gray-100">{total}</span> 条
               </p>
               <div className="flex gap-2">
                 <button
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed
-                    hover:bg-gray-50 hover:border-gray-400 transition-colors"
+                  className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed
+                    hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
                 >
                   <ChevronLeftIcon className="h-5 w-5" />
                 </button>
-                <span className="px-4 py-2 text-sm text-gray-600 font-medium">
+                <span className="px-4 py-2 text-sm text-gray-600 dark:text-gray-300 font-medium">
                   {currentPage} / {totalPages}
                 </span>
                 <button
                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
-                  className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed
-                    hover:bg-gray-50 hover:border-gray-400 transition-colors"
+                  className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed
+                    hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
                 >
                   <ChevronRightIcon className="h-5 w-5" />
                 </button>

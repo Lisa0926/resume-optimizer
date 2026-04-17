@@ -1,11 +1,14 @@
-# 环境变量和敏感配置
-/.env
-.env.*
-!.env.example
-CLAUDE.md
+# ===========================================
+# Resume Optimizer - .gitignore
+# ===========================================
 
-# Python virtual environment
-backend/venv/
+# 环境变量和敏感配置
+*.env
+.env
+.env.*
+!.env.sample
+backend/.env
+frontend/.env
 
 # Python
 __pycache__/
@@ -13,29 +16,23 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+backend/venv/
+*.pyc
 
 # Node
 node_modules/
 npm-debug.log
 yarn-error.log
-dist/
+frontend/node_modules/
 
-# 日志文件
+# 构建产物
+backend/build/
+backend/dist/
+backend/*.egg-info/
+frontend/build/
+frontend/dist/
+
+# 日志
 logs/
 *.log
 
@@ -46,6 +43,7 @@ logs/
 
 # 上传文件
 uploads/
+backend/uploads/
 
 # 测试和覆盖率
 .pytest_cache/
@@ -63,3 +61,11 @@ htmlcov/
 # 操作系统
 .DS_Store
 Thumbs.db
+
+# Claude 本地配置
+.claude/
+CLAUDE.md
+
+# 临时文件
+*.tmp
+*.bak
