@@ -70,3 +70,8 @@ CLAUDE.md
 # 临时文件
 *.tmp
 *.bak
+
+# Hermes 相关（不上传）
+.hermes/
+**/.hermes/
+*hermes*
